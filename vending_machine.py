@@ -37,8 +37,12 @@ drinks = [item1, item2, item3]
 notes = [100, 50, 20, 10, 5, 2, 1]
 
 # Input
-number_of_choices = 1
+number_of_choices = 2
 payment = 50
 
 notes = vending_machine(drinks, number_of_choices, payment)
-print(notes)
+# key name will be note, key value will be the amount of notes
+# {'100': 0, '50': 0, '20': 1, '10': 1, '5': 1, '2': 1, '1': 0}
+for k, v in notes.items():
+    print(f"{v} pieces of note {k}")
+# print(notes)
