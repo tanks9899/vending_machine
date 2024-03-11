@@ -1,10 +1,11 @@
-def note_change(leftover_price, note):
+def note_change(remainding_price, note, quantity):
     counter = 0
-    while(leftover_price - note) >= 0:
-        leftover_price = leftover_price - note
+    while(remainding_price - int(note)) >= 0 and quantity != 0:
+        remainding_price = remainding_price - int(note)
         counter += 1
+        quantity -= 1
 
-    return leftover_price, {f'{note}': counter}
+    return remainding_price, {f'{note}': counter}
 
 def vending_machine(drinks, number_of_choices, payment):
     # Expect user will insert starting from 1 but not 0
@@ -12,7 +13,7 @@ def vending_machine(drinks, number_of_choices, payment):
     remainding_price = payment - item_price
     amount_of_notes = {}
     for i in notes:
-        remainding_price, amount_of_note = note_change(remainding_price, i)
+        remainding_price, amount_of_note = note_change(remainding_price, i['name'], i['quantity'])
         amount_of_notes.update(amount_of_note)
     
     return amount_of_notes
@@ -20,7 +21,7 @@ def vending_machine(drinks, number_of_choices, payment):
 # Predefined Value
 item1 = {
 "name": "A",
-"price": 13
+"price": 33
 }
 
 item2 = {
@@ -33,16 +34,27 @@ item3 = {
 "price": 7
 }
 
-drinks = [item1, item2, item3]
-notes = [100, 50, 20, 10, 5, 2, 1]
+item4 = {
+"name": "D",
+"price": 3
+}
+
+drinks = [item1, item2, item3, item4]
+notes = [{'name':'100', 'quantity': 0}, 
+        {'name':'50', 'quantity': 1},
+        {'name':'20', 'quantity': 1},
+        {'name':'10', 'quantity': 1},
+        {'name':'5', 'quantity': 1},
+        {'name':'2', 'quantity': 1},
+        {'name':'1', 'quantity': 20}]
 
 # Input
-number_of_choices = 2
-payment = 50
+number_of_choices = 1
+payment = 100
 
-notes = vending_machine(drinks, number_of_choices, payment)
+results = vending_machine(drinks, number_of_choices, payment)
 # key name will be note, key value will be the amount of notes
 # {'100': 0, '50': 0, '20': 1, '10': 1, '5': 1, '2': 1, '1': 0}
-for k, v in notes.items():
+for k, v in results.items():
     print(f"{v} pieces of note {k}")
-# print(notes)
+# print(results)
